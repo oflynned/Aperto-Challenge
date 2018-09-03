@@ -17,10 +17,10 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 public class FileLoader {
-    public static JSONArray loadSampleTweetResponse(Context context) throws IOException, JSONException {
+    public static JSONArray loadSampleResponse(Context context, int resource) throws IOException, JSONException {
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
-        try (InputStream is = context.getResources().openRawResource(R.raw.sample_tweet_response)) {
+        try (InputStream is = context.getResources().openRawResource(resource)) {
             Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             int n;
             while ((n = reader.read(buffer)) != -1) {

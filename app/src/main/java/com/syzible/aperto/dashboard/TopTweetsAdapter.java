@@ -15,12 +15,8 @@ import java.util.List;
 public class TopTweetsAdapter extends RecyclerView.Adapter<TopTweetsAdapter.ViewHolder> {
     private List<Tweet> tweets;
 
-    public TopTweetsAdapter() {
+    TopTweetsAdapter() {
         this.tweets = new ArrayList<>();
-    }
-
-    public TopTweetsAdapter(List<Tweet> tweets) {
-        this.tweets = tweets;
     }
 
     public void setTweets(List<Tweet> tweets) {

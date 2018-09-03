@@ -18,9 +18,7 @@ public class TopTweetsPresenterImpl implements TopTweetsPresenter, WoeidCallback
     private TopTweetsInteractor topTweetsInteractor;
     private TopTweetsView topTweetsView;
     private List<Tweet> topTweetsList;
-
-    private int woeid;
-    private float lat, lng;
+    private Context context;
 
     TopTweetsPresenterImpl(TopTweetsView topTweetsView) {
         this.topTweetsView = topTweetsView;
@@ -30,19 +28,12 @@ public class TopTweetsPresenterImpl implements TopTweetsPresenter, WoeidCallback
 
     @Override
     public void fetchTweets(Context context) {
+        this.context = context;
         if (topTweetsView != null) {
             topTweetsView.showProgressBar();
         }
 
-        try {
-            // TODO fetch woeid and real tweets
-            topTweetsInteractor.fetchTweets(context, 1, this);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-            if (topTweetsView != null) {
-                topTweetsView.showError("Something went wrong!");
-            }
-        }
+        topTweetsInteractor.fetchWoeid(52, -7, this);
     }
 
     @Override
@@ -50,7 +41,7 @@ public class TopTweetsPresenterImpl implements TopTweetsPresenter, WoeidCallback
         if (topTweetsList == null)
             topTweetsList = new ArrayList<>();
 
-        for (int i = 0; i < tweets.length(); i++){
+        for (int i = 0; i < tweets.length(); i++) {
             JSONObject o = tweets.getJSONObject(i);
             Tweet tweet = new Tweet(o);
             topTweetsList.add(tweet);
@@ -63,7 +54,13 @@ public class TopTweetsPresenterImpl implements TopTweetsPresenter, WoeidCallback
 
     @Override
     public void onSuccess(int woeid) {
-
+        try {
+            topTweetsInteractor.fetchTweets(context, woeid, this);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+            if (topTweetsView != null)
+                topTweetsView.showError("Something went wrong");
+        }
     }
 
     @Override

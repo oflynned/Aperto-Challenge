@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Dublin",
+    "placeType": {
+      "code": 7,
+      "name": "Town"
+    },
+    "url": "http://where.yahooapis.com/v1/place/560743",
+    "parentid": 23424803,
+    "country": "Ireland",
+    "woeid": 560743,
+    "countryCode": "IE"
+  }
+]
